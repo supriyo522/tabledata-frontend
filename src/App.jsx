@@ -11,16 +11,25 @@ function App() {
 
   const handleAdd = () => {
     const { name, age, place } = formData;
-
     if (name && age && place) {
       setTableData([...tableData, { name, age, place }]);
       setFormData({ name: "", age: "", place: "" });
     }
   };
 
+  const handleClear = () => {
+    setFormData({ name: "", age: "", place: "" });
+  };
+
+  const handleRemove = (index) => {
+    const updatedData = tableData.filter((_, i) => i !== index);
+    setTableData(updatedData);
+  };
+
   return (
     <div className="container">
-      <h1>Table Data</h1>
+      <h1>Add People to Table</h1>
+
       <div className="input-section">
         <input
           type="text"
@@ -44,6 +53,7 @@ function App() {
           onChange={handleChange}
         />
         <button onClick={handleAdd}>Add</button>
+        <button onClick={handleClear}>Clear</button>
       </div>
 
       <table>
@@ -52,16 +62,26 @@ function App() {
             <th>Name</th>
             <th>Age</th>
             <th>Place</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {tableData.map((item, index) => (
-            <tr key={index}>
-              <td>{item.name}</td>
-              <td>{item.age}</td>
-              <td>{item.place}</td>
+          {tableData.length === 0 ? (
+            <tr>
+              <td colSpan="4">No data available</td>
             </tr>
-          ))}
+          ) : (
+            tableData.map((item, index) => (
+              <tr key={index}>
+                <td>{item.name}</td>
+                <td>{item.age}</td>
+                <td>{item.place}</td>
+                <td>
+                  <button onClick={() => handleRemove(index)}>Remove</button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>
