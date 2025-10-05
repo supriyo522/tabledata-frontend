@@ -30,7 +30,7 @@ h1 {
 
 .input-container button {
   padding: 9px 20px;
-  margin-left: 5px;
+  margin: 5px;
   background-color: #007bff;
   color: white;
   border: none;
@@ -65,7 +65,7 @@ tr:nth-child(even) {
   background-color: #f8f9fa;
 }
 
-.delete-btn {
+.remove-btn {
   background-color: #dc3545;
   color: white;
   border: none;
@@ -75,7 +75,7 @@ tr:nth-child(even) {
   transition: 0.3s;
 }
 
-.delete-btn:hover {
+.remove-btn:hover {
   background-color: #c82333;
 }
 

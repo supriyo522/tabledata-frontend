@@ -18,14 +18,18 @@ function App() {
     }
   };
 
-  const handleDelete = (index) => {
+  const handleClear = () => {
+    setForm({ name: "", age: "", place: "" });
+  };
+
+  const handleRemove = (index) => {
     const updated = people.filter((_, i) => i !== index);
     setPeople(updated);
   };
 
   return (
     <div className="container">
-      <h1>People Table App</h1>
+      <h1>Add People to Table</h1>
 
       <div className="input-container">
         <input
@@ -50,6 +54,7 @@ function App() {
           onChange={handleChange}
         />
         <button onClick={handleAdd}>Add</button>
+        <button onClick={handleClear}>Clear</button>
       </div>
 
       {people.length === 0 ? (
@@ -71,8 +76,8 @@ function App() {
                 <td>{person.age}</td>
                 <td>{person.place}</td>
                 <td>
-                  <button className="delete-btn" onClick={() => handleDelete(index)}>
-                    Delete
+                  <button className="remove-btn" onClick={() => handleRemove(index)}>
+                    Remove
                   </button>
                 </td>
               </tr>
