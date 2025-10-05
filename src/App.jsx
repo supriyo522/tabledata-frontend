@@ -1,89 +1,85 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [formData, setFormData] = useState({ name: "", age: "", place: "" });
-  const [tableData, setTableData] = useState([]);
+  const [form, setForm] = useState({ name: "", age: "", place: "" });
+  const [people, setPeople] = useState([]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   };
 
   const handleAdd = () => {
-    const { name, age, place } = formData;
+    const { name, age, place } = form;
     if (name && age && place) {
-      setTableData([...tableData, { name, age, place }]);
-      setFormData({ name: "", age: "", place: "" });
+      setPeople([...people, { name, age, place }]);
+      setForm({ name: "", age: "", place: "" });
     }
   };
 
-  const handleClear = () => {
-    setFormData({ name: "", age: "", place: "" });
-  };
-
-  const handleRemove = (index) => {
-    const updatedData = tableData.filter((_, i) => i !== index);
-    setTableData(updatedData);
+  const handleDelete = (index) => {
+    const updated = people.filter((_, i) => i !== index);
+    setPeople(updated);
   };
 
   return (
     <div className="container">
-      <h1>Add People to Table</h1>
+      <h1>People Table App</h1>
 
-      <div className="input-section">
+      <div className="input-container">
         <input
           type="text"
-          name="name"
           placeholder="Enter Name"
-          value={formData.name}
+          name="name"
+          value={form.name}
           onChange={handleChange}
         />
         <input
           type="number"
-          name="age"
           placeholder="Enter Age"
-          value={formData.age}
+          name="age"
+          value={form.age}
           onChange={handleChange}
         />
         <input
           type="text"
-          name="place"
           placeholder="Enter Place"
-          value={formData.place}
+          name="place"
+          value={form.place}
           onChange={handleChange}
         />
         <button onClick={handleAdd}>Add</button>
-        <button onClick={handleClear}>Clear</button>
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Place</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.length === 0 ? (
+      {people.length === 0 ? (
+        <p className="empty-text">No entries yet</p>
+      ) : (
+        <table>
+          <thead>
             <tr>
-              <td colSpan="4">No data available</td>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Place</th>
+              <th>Actions</th>
             </tr>
-          ) : (
-            tableData.map((item, index) => (
+          </thead>
+          <tbody>
+            {people.map((person, index) => (
               <tr key={index}>
-                <td>{item.name}</td>
-                <td>{item.age}</td>
-                <td>{item.place}</td>
+                <td>{person.name}</td>
+                <td>{person.age}</td>
+                <td>{person.place}</td>
                 <td>
-                  <button onClick={() => handleRemove(index)}>Remove</button>
+                  <button className="delete-btn" onClick={() => handleDelete(index)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
